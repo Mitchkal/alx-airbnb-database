@@ -1,4 +1,5 @@
-CREATE TABLE User (
+--users table
+CREATE TABLE users (
     user_id CHAR(36) PRIMARY KEY,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -9,12 +10,13 @@ CREATE TABLE User (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_user_user_id ON User(user_id);
+CREATE INDEX idx_user_user_id ON users(user_id);
 
-CREATE TABLE Property (
+-- properties table
+CREATE TABLE properties (
     property_id CHAR(36) PRIMARY KEY,
     host_id CHAR(36) NOT NULL,
-    FOREIGN KEY (host_id) REFERENCES User(user_id),
+    FOREIGN KEY (host_id) REFERENCES users(user_id),
     name VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
     location VARCHAR(100) NOT NULL,
@@ -23,15 +25,15 @@ CREATE TABLE Property (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_property_property_id ON Property(property_id);
+CREATE INDEX idx_property_property_id ON properties(property_id);
 
-
-CREATE TABLE Booking (
+-- bookings table
+CREATE TABLE bookings (
     booking_id CHAR(36) PRIMARY KEY,
     property_id CHAR(36) NOT NULL,
     user_id CHAR(36) NOT NULL,
-    FOREIGN KEY (property_id) REFERENCES Property(property_id),
-    FOREIGN KEY (user_id) REFERENCES User(user_id),
+    FOREIGN KEY (property_id) REFERENCES properties(property_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     total_price DECIMAL(10,2) NOT NULL,
@@ -39,25 +41,26 @@ CREATE TABLE Booking (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX idx_booking_property_id ON Booking(property_id);
-CREATE INDEX idx_booking_booking_id ON Booking(booking_id);
+CREATE INDEX idx_booking_property_id ON bookings(property_id);
+CREATE INDEX idx_booking_booking_id ON bookings(booking_id);
 
-
-CREATE TABLE Payment (
+-- payments table
+CREATE TABLE payments (
     payment_id CHAR(36) PRIMARY KEY,
     booking_id CHAR(36) NOT NULL,
-    FOREIGN KEY(booking_id) REFERENCES Booking(booking_id),
+    FOREIGN KEY(booking_id) REFERENCES bookings(booking_id),
     amount DECIMAL(10,2) NOT NULL,
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     payment_method ENUM('credit_card', 'paypal', 'stripe') NOT NULL
 );
 
-CREATE INDEX idx_payment_booking_id ON Payment(booking_id);
+CREATE INDEX idx_payment_booking_id ON payments(booking_id);
 
-CREATE TABLE Review (
+-- reviews table
+CREATE TABLE reviews (
     review_id CHAR(36) PRIMARY KEY,
     property_id CHAR(36) NOT NULL,
-    FOREIGN KEY(property_id) REFERENCES Property(property_id),
+    FOREIGN KEY(property_id) REFERENCES properties(property_id),
     user_id CHAR(36) NOT NULL,
     FOREIGN KEY(user_id) REFERENCES User(user_id),
     rating INT NOT NULL CHECK (rating >= 1 AND rating <= 5),
@@ -65,12 +68,13 @@ CREATE TABLE Review (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE Message (
+-- messages table
+CREATE TABLE messages (
     message_id CHAR(36) PRIMARY KEY,
     sender_id CHAR(36) NOT NULL,
-    FOREIGN KEY (sender_id) REFERENCES User(user_id),
+    FOREIGN KEY (sender_id) REFERENCES users(user_id),
     recipient_id CHAR(36) NOT NULL,
-    FOREIGN KEY (recipient_id) REFERENCES User(user_id),
+    FOREIGN KEY (recipient_id) REFERENCES users(user_id),
     message_body TEXT NOT NULL,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
