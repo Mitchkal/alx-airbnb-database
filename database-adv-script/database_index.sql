@@ -1,9 +1,5 @@
--- sql
-
-EXPLAIN SELECT * FROM users WHERE role is 'admin';
+--- SQL indexes for commonly used tables
 CREATE INDEX idx_users_role ON users(role);
-EXPLAIN SELECT * FROM users WHERE role is 'admin';
-
 
 CREATE INDEX idx_users_email ON users(email);
 
