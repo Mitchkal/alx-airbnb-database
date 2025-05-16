@@ -15,7 +15,10 @@ VALUES
 INSERT INTO bookings (booking_id, property_id, user_id, start_date, end_date, total_price, status)
 VALUES
 ('b1-uuid-0001', 'p1-uuid-0001', 'u1-uuid-0001', '2025-06-01', '2025-06-05', 480.00, 'confirmed'),
-('b2-uuid-0002', 'p2-uuid-0002', 'u1-uuid-0001', '2025-07-10', '2025-07-12', 400.00, 'pending');
+('b2-uuid-0002', 'p2-uuid-0002', 'u1-uuid-0001', '2025-07-10', '2025-07-12', 400.00, 'pending'),
+('b3-uuid-0003', 'p1-uuid-0001', 'u1-uuid-0001', '2023-06-01', '2021-06-05', 480.00, 'confirmed'),
+('b1-uuid-0004', 'p1-uuid-0001', 'u1-uuid-0001', '2022-06-01', '2022-06-05', 480.00, 'confirmed')
+('b1-uuid-0005', 'p1-uuid-0001', 'u1-uuid-0001', '2026-06-01', '2026-06-05', 480.00, 'confirmed');
 
 -- insert payments
 INSERT INTO payments (payment_id, booking_id, amount, payment_method)
