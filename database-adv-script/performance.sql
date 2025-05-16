@@ -1,12 +1,12 @@
 -- initial query that retrieves all bookings along with the user details, property details, and payment details
-SELECT *
+EXPLAIN SELECT *
  FROM users
  INNER JOIN bookings ON users.user_id =  bookings.user_id 
  INNER JOIN properties ON bookings.property_id = properties.property_id
  INNER JOIN payments ON bookings.booking_id = payments.booking_id;
 
- --- improved query to make it more efficient
- SELECT
+--- improved query to make it more efficient
+SELECT
     u.user_id,
     u.first_name,
     u.last_name,
